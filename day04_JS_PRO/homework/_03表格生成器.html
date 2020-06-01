@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表格生成器</title>
+</head>
+<body>
+    <input type="text" id="rows" value="5">行
+    <input type="text" id="cols" value="5">列
+    <input type="button" value="创建表格" onclick="createTable()">
+<hr>
+    <div id="tbDiv"></div>
+
+<script>
+    function createTable() {
+        //把tbDiv里已经有内容清除掉
+        let tbDiv = document.querySelector("#tbDiv");
+        tbDiv.innerHTML = "";
+
+        //获取用户输入的行数和列数
+        let row = document.querySelector("#rows").value;
+        let col = document.querySelector("#cols").value;
+
+        //创建table标签，插入到div里
+        let tb = document.createElement("table");
+        tb.border = 1;
+        tb.cellSpacing = 0;
+        tb.width = "30%";
+        tbDiv.appendChild(tb);
+
+        //表格里创建row个行：tr标签
+        for (let i = 1; i < row; i++) {
+            //创建行，插入到表格里
+            let row = document.createElement("tr");
+            row.align = "center";
+            tb.appendChild(row);
+
+            //每行创建col个单元格：td标签
+            for (let j = 0; j < col; j++) {
+                //创建单元格，设置单元格内容，然后插入到行里
+                let cell = document.createElement("td");
+                cell.innerHTML = (i + 1) + "-" + (j + 1);
+                row.appendChild(cell);
+            }
+        }
+    }
+</script>
+</body>
+</html>

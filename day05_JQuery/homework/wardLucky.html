@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>抽奖</title>
+</head>
+<body>
+
+<!-- 小像框 -->
+<div style="border-style:dotted;width:160px;height:100px">
+    <img id="img1ID" src="../img/man00.jpg" style="width:160px;height:100px"/>
+</div>
+
+<!-- 大像框 -->
+<div style="border-style:double;width:1000px;height:630px;position:absolute;left:200px;top:10px">
+    <img id="img2ID" src="../img/man00.jpg" width="100%" />
+</div>
+
+<!-- 开始按钮 -->
+<input id="startID" type="button" value="点击开始" style="width:80px;height:30px;font-size:12px">
+
+<!-- 停止按钮 -->
+<input id="stopID" type="button" value="点击停止" style="width:80px;height:30px;font-size:12px">
+
+<script src="../jq/jquery-3.4.1.min.js"></script>
+<script type='text/javascript'>
+
+    //准备一个一维数组，放用户的图片路径
+    let imgs = [
+        "../img/man00.jpg",
+        "../img/man01.jpg",
+        "../img/man02.jpg",
+        "../img/man03.jpg",
+        "../img/man04.jpg",
+        "../img/man05.jpg",
+        "../img/man06.jpg"
+    ];
+
+    let timer;
+    $("#startID").click(function () {
+
+        //开启定时器：每间隔10毫秒切换一次图片，图片路径从imgs中随机获取
+        timer = setInterval(function () {
+            let randomIndex = Math.floor(Math.random() * 7);
+            let imageSrc = imgs[randomIndex];
+            $("#img1ID").attr("src", imageSrc);
+        }, 10);
+
+        //开启之后，把开始按钮禁用，避免同时多次抽奖
+        $(this).prop("disabled", true);
+    });
+
+    $("#stopID").click(function(){
+        //清除定时器，停止切换小图片
+        clearInterval(timer);
+
+        //将小图片显示到大像框里
+        let src = $("#img1ID").attr("src");
+        $("#img2ID").attr("src", src);
+
+        //停止切换时，重新启用“开始按钮”，便于下次抽奖
+        $("#startID").prop("disabled", false);
+    });
+</script>
+</body>
+</html>

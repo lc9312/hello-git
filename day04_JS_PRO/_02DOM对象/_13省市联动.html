@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>省市联动</title>
+</head>
+<body>
+<select id = "province" onchange="changeCity(this)" >
+    <option>--请选择省--</option>
+    <option value="0">广东省</option>
+    <option value="1">广西省</option>
+    <option value="2">湖南省</option>
+</select>
+<select id="cities">
+    <option>--请选择市--</option>
+</select>
+
+
+<script>
+        // 城市库
+        let cityArray =[
+            ["广州","深圳","珠海","佛山"],
+            ["南宁","桂林","柳州","北海"],
+            ["长沙","张家界","常德","湘潭"]
+        ];
+
+        function changeCity(pro) {
+            // 1、获取省份的value值
+            let province = document.querySelector("#province");
+
+            // 2、获取对应省的城市
+            let v = pro.value;
+            let currentCities = cityArray[v];
+
+            // 3、初始化城市下拉框的信息
+            let cityLabel = document.querySelector("#cities");
+            cityLabel.innerHTML = "<option>--请选择市--</option>";
+
+            // 4、遍历对应省的城市，创建option标签，添加城市信息
+            for( let city of currentCities){
+                // 创建标签
+                let element = document.createElement("option");
+
+                // 设置标签内容
+                element.innerHTML = city;
+
+                // 将标签加到城市下拉框中
+                cityLabel.appendChild(element);
+            }
+        }
+</script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>作业：异步搜索</title>
+    <style type="text/css">
+        .content{
+            width:643px;
+            margin:50px auto;
+            text-align: center;
+        }
+        input[type='text']{
+            width:530px;
+            height:40px;
+            font-size: 14px;
+        }
+        input[type='button']{
+            width:100px;
+            height:46px;
+            background: #38f;
+            border: 0;
+            color: #fff;
+            font-size: 15px
+        }
+        .result{
+            /*position: absolute;*/
+            width: 535px;
+            border: 1px solid #999;
+            border-top: 0;
+            /*搜索框下边的结果列表，默认是隐藏状态的*/
+            display: none;
+        }
+        .result div:hover{
+            background-color: #ccc;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <img alt="" src="../img/logo.png"><br/><br/>
+    <input type="text" name="word" id="searchWord">
+    <input type="button" value="搜索一下">
+    <div class="result">
+        <div>张三</div>
+        <div>张三丰</div>
+    </div>
+</div>
+<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+
+    // 对搜索框事件绑定功能
+    $("#searchWord").keyup(function () {
+        //如果搜索框里的值为空：不需要发请求进行搜索，并且原有结果列表要清空并隐藏
+        if (this.value === "") {
+            $(".result").empty().hide();
+            return;
+        }
+
+        //使用Ajax技术，向要向http://localhost:18888/search发请求，并且传参name=文本框里的值
+        let word = this.value.trim();
+        let data = "name=" + word;
+
+        $.post("http://localhost:18888/search", data, function(users){
+            //jQuery会自动把响应结果转换成json对象
+            if (users != null && users.length > 0){
+                //如果搜索到的有结果：要先把结果列表里原有的内容清空，再把这次搜索的结果插入进去
+                $(".result").empty().show();
+
+                // 插入搜索结果
+                for (let user of users) {
+                    $("<div></div>").html(user.name).appendTo(".result");
+                }
+            }else{
+                //搜索结果为空：把结果列表清空并隐藏掉  hide()把元素隐藏掉  show()把元素显示出来
+                $(".result").empty().hide();
+            }
+        }, "json");
+    });
+</script>
+</body>
+</html>

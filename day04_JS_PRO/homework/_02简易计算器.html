@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>简易计算器</title>
+    <style>
+        .box{
+            width:300px;
+            height:400px;
+            border: solid 1px #ccc;
+        }
+        .exp{
+            width:100%;
+            height:50px;
+            background-color: aliceblue;
+            line-height: 50px;
+
+        }
+        .numberBox{
+            width:100%;
+            height:350px;
+
+            background-color: #eee;
+            border-collapse: collapse;
+        }
+        .numberBox td{
+            width:25%;
+            border: 1px solid #fff;
+            text-align: center;
+        }
+        .numberBox td:hover{
+            background-color: #ccc;
+        }
+        .numberBox td:active{
+            background-color: #999;
+        }
+        .fnBtn{
+            background-color: #ddd;
+            font-weight: bolder;
+            height: 20%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <div class="exp" id="exp"></div>
+    <table class="numberBox">
+        <tr>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td class="fnBtn">+</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td class="fnBtn">-</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td class="fnBtn">*</td>
+        </tr>
+        <tr>
+            <td colspan="2">0</td>
+            <td>.</td>
+            <td class="fnBtn">/</td>
+        </tr>
+        <tr>
+            <td class="fnBtn" colspan="3">=</td>
+            <td id="clear" class="fnBtn">C</td>
+        </tr>
+    </table>
+</div>
+
+<script>
+
+    let operator = document.querySelector("#exp");
+
+    //获取所有单元格标签
+    let td = document.querySelectorAll("td");
+
+    //给每个td绑定单击事件
+    for (let cell of td) {
+        cell.onclick = function(){
+
+            //获取被点击的td里的内容
+            let value = this.innerHTML;
+
+            //如果点击的是C，则清空：清空exp里的内容
+            if (value === "C") {
+                operator.innerHTML = "";
+
+            //如果点击的是=，则计算：获取exp里的内容，计算后把结果重新放到exp里
+            }else if(value === "="){
+                operator.innerHTML = eval(operator.innerHTML);
+            }else{
+
+            //如果点击的是其它，则拼接算式：把点击的内容value拼接到exp里
+                operator.innerHTML += value;
+            }
+        }
+    }
+</script>
+</body>
+</html>

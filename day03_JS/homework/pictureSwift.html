@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增强版轮播图</title>
+</head>
+<body onload="start()">
+    <img src="../img/1.jpg" >
+
+<script>
+    // 1、获取img对象
+    let img = document.querySelector("img");
+    let filename = 1;
+    let timer = undefined;
+
+    // 开始轮播的方法
+    function start() {
+
+        timer = setInterval(function () {
+            // 切换图片
+            filename++;
+
+            // 重置图片
+            if (filename > 5){
+                filename = 1;
+            }
+            img.src = "../img/"+filename+".jpg";
+        },2000);
+    }
+
+    // 停止轮播的方法
+    function stop() {
+        clearInterval(timer);
+    }
+
+    // 不同事件绑定不同的功能
+    img.onmouseover = function (){
+        stop();
+    }
+    img.onmouseout = function (){
+        start();
+    }
+</script>
+</body>
+</html>
